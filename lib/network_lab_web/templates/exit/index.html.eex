@@ -1,0 +1,15 @@
+<%= if @user do %>
+
+  <section class="phx-hero exit">
+    <%= if @user.status == "finished" do %>
+    <h1>Thank you, you're done!</h1>
+    <h3>Your completion code is: <%= @user.exit_token %></h3>
+    <% end %>
+
+    <%= if @user.status == "dropped" do %>
+    <h1>You did not complete your task in time.</h1>
+    <h3>Unfortunately, we can't provide you with an exit token</h3>
+    <% end %>
+  </section>
+
+<% end %>

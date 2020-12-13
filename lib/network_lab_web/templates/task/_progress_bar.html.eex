@@ -1,0 +1,6 @@
+<div id="progress-bar-wrapper" style='display:block;'>
+    <div id="progress-bar-past"></div>
+    <div id="progress-bar-future"></div>
+</div>
+
+

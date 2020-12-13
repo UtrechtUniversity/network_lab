@@ -1,0 +1,19 @@
+<p>You will be presented with 32 messages. Some of these messages will be true and 
+others will be false.</p>
+
+<p>Your task is to read each message and then click <strong>‘share’ if you believe 
+the message to be true or otherwise click ‘discard’</strong>.</p>
+
+<%= if @user.condition_2 == "incentive" do %>
+    <p>
+    For each true message you share and for each false message you discard, 
+    you will receive an <strong>extra $0.10</strong>.<br />
+    For each true message you discard and for each false message you share, 
+    <strong>$0.10 will be subtracted</strong> from your payment.<br />
+    This will affect your bonus, but not your $1.50 for completion of the study.
+    </p>
+<% else %>
+    <p>You will receive <strong>$1.5</strong> upon completion of the study.</p>
+<% end %>
+
+

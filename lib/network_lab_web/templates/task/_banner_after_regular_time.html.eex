@@ -1,0 +1,15 @@
+<div id="task-banner-after-regular" class="alert alert-danger"
+    style='display:<%= if @in_regular_time?, do: "none", else: "block" %>;'>
+
+    Please evaluate your remaining unread messages! You will receive your exit code when you are done.
+
+    <%= if Application.get_env(:network_lab, :game_type) != :pretest and 
+        @user.condition_2 == "incentive" do %>
+    <span style="display: block; padding-top: 1rem;">
+    For each true message you share and for each false message you discard, you will receive an extra 
+    <strong>$0.10</strong>. For each true message you discard and for each false message you share, 
+    <strong>$0.10</strong> will be subtracted from your payment.
+    </span>
+    <% end %>
+
+</div>

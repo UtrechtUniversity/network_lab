@@ -1,0 +1,24 @@
+<h3>You are:</h3>
+
+<ul>
+    <!-- %= NetworkLabWeb.TaskView.username_list_item(@user.username, @user.ideology) % -->
+    <li class="username <%= @user.ideology %>">
+        <%= String.replace(@user.username, "_", " ") %>
+        (<%= String.slice(@user.ideology, 0..2) %>)
+    </li>
+</ul>
+
+<%= if NetworkLabWeb.TaskView.has_neighbours?(@user) do %>
+
+    <h3>Your neighbours:</h3>
+    
+    <ul>
+        <!-- %= for { name, ideology } <- @user.neighbour_info do % -->
+            <!-- %= NetworkLabWeb.TaskView.username_list_item(name, ideology) % -->
+        <!-- % end % -->
+        <%= for { name, _ } <- @user.neighbour_info do %>
+            <%= NetworkLabWeb.TaskView.username_list_item(name, "moderate") %>
+        <% end %>
+    </ul>
+
+<% end %>

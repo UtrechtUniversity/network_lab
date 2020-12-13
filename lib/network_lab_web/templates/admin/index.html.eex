@@ -1,0 +1,93 @@
+<section id="export">
+  <p>
+    <%= link("Export cache", to: "/admin/export", method: "get", class: "button", 
+      data: [confirm: "Are you sure?"]) %>
+    <%= link("Flush queue", to: "/admin/flush_queue", method: "get", class: "button margin-left", 
+      data: [confirm: "Are you sure?"]) %>
+    <%= link("Check tokens", to: "/admin/tokens", method: "get", class: "button margin-left") %>
+  </p>
+  <ul id="queues">
+    <li>DB queue: <span class="db"></span></li>
+    <li>Waiting queues libs: <span class="libs"></span>, cons: <span class="cons"></span></li>
+  </ul>
+</section>
+
+
+<section id="network-data">
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>condition 1</th>
+        <th>condition 2</th>
+        <th>status</th>
+        <th>capacity</th>
+        <th># subjects</th>
+    </thead>
+
+    <tbody>
+      <%= for network <- @networks do %>
+        <tr id="network-<%= network.id %>">
+          <td class="id"><%= network.id %></td>
+          <td class="name"><%= network.name %></td>
+          <td class="condition-1"><%= network.condition_1 %></td>
+          <td class="condition-2"><%= network.condition_2 %></td>
+          <td class="status"><%= network.status %></td>
+          <td class="capacity"><%= network.capacity %></td>
+          <td class="attached-users"><%= network.attached_users %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>
+
+
+<section id="subject-data">
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>status</th>
+        <th>condition 1</th>
+        <th>condition 2</th>
+        <th>link</th>
+    </thead>
+
+    <tbody>
+      <%= for user <- @users do %>
+        <tr id="user-<%= user.id %>">
+          <td class="id"><%= user.id %></td>
+          <td class="username"><%= user.username %></td>
+          <td class="status"><%= user.status %></td>
+          <td class="condition-1"><%= user.condition_1 %></td>
+          <td class="condition-2"><%= user.condition_2 %></td>
+          <%
+            ideologies = Application.get_env(:network_lab, :ideologies)
+            { alleged_ideology, link_color } = if Application.get_env(:network_lab, :game_env) == :test do
+              { ideology_id, _, ideology } = Enum.random(ideologies)
+              link_style = case ideology do
+                "liberal" -> "color: blue;"
+                "conservative" -> "color: red;"
+                "moderate" -> "color: grey;"
+                _ -> ""
+              end
+              { "g=#{ ideology_id }&", link_style }
+            else
+              { "", "" }
+            end
+          %>
+          <td>
+          <%= link(
+            "click", 
+            to: "#{NetworkLabWeb.Endpoint.url}/welcome?#{alleged_ideology}access_token=#{user.access_token}",
+            style: link_color
+          )
+          %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

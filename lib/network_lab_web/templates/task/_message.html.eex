@@ -1,0 +1,20 @@
+<%= if Application.get_env(:network_lab, :game_type) != :pretest and 
+    @user.condition_1 != "control" and 
+    @message.sender_id == nil do %>
+
+    <!-- seeded message, do not show it -->
+
+<% else %>
+
+    <li class="message">
+        <span>
+        <%= if @message.decision do %>
+            <img src="/images/envelope-open-text.svg" alt="new">
+        <% else %>
+            <img src="/images/envelope.svg" alt="opened">
+        <% end %>
+        </span>
+        <%= link @message.proposition_title, to: "/task/#{@message.id}/edit" %>
+    </li>
+
+<% end %>

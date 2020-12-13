@@ -1,0 +1,112 @@
+<section class="phx-hero">
+  <h1>Welcome</h1>
+</section>
+
+<section class="welcome">
+    <h2>Info & payment</h2>
+      
+    <p>Thank you for accepting this HIT.</p>
+      
+    <p>This academic research study should not take more than 9 minutes.</p>
+
+    <p>When you finish the HIT, you will receive a completion code in order to get paid. 
+    You will receive <strong>$1.5</strong> upon completion of the study.</p>
+
+    <p>Please do not close this tab or reload the page during the task. If you leave the 
+    website during the task or fail to finish your task in time, you will not receive any 
+    earnings. You can participate only once.</p>
+
+    <h2>Overview of tasks</h2>
+
+    <ol>
+    <li>Your task is to read &plusmn; 30 messages and then <strong>click ‘share’ if you believe 
+      the message to be true or otherwise click ‘discard’</strong>.</li>
+    <li>In certain cases, you will be asked to wait until enough other people have also joined the platform.</li>
+    </ol>
+
+    <section class="terms-agreements">
+
+      <h4>Terms and Agreements</h4>
+
+      <p>
+        The data collected in this study does not include any personally identifying information about you. 
+        By participating, you understand that the research data gathered during this study will be used by 
+        the researchers and aggregated results will be published. A record of your workerID will be deleted 
+        after this study.
+      </p>
+
+      <p>
+        The data for this study is collected and controlled by Arnout van de Rijt of the European University 
+        Institute (EUI). Your data is protected by EUIs data protection policy (PD10/2019). You may contact 
+        EUI’s data protection officer through
+        <a href="mailto:data_protection_officer@EUI.eu">data_protection_officer@EUI.eu</a>.
+        You have the right to withdraw your consent for participating in this study at any time by 
+        closing this tab during the task. Upon withdrawal, your data will be deleted.
+      </p>
+
+      <p>If you have any questions concerning this study, please write to 
+        <a href="mailto:descil@ethz.ch?subject='Question NetworkLab, access_token: <%= @user.access_token%>'">
+        descil@ethz.ch</a>.
+      </p>
+
+      <p>A copy of the consent form co-signed by the interviewer 
+        <a href="https://drive.google.com/file/d/19JdfTJ18fxEMMZV6v9tamAqoHb3iXgQB/view?usp=sharing" target="_blank">
+          can be obtained here
+          </a>.
+      </p>
+
+    </section>
+
+
+
+
+  <%= form_for @user_changeset, Routes.session_path(@conn, :create), [method: :post, as: :user], fn f -> %>
+
+    <%= hidden_input f, :access_token, value: @user.access_token %>
+    <%= hidden_input f, :alleged_ideology, value: @alleged_ideology %>
+
+    <fieldset>
+      <legend>Personal data</legend>
+      <p>
+        <%= checkbox f, :agreed_to_personal_data, id: "terms_of_service_1" %>
+        <label for="terms_of_service_1" class="checkbox">
+          I have received sufficient information about this study and understand my role in it. 
+          The future processing of my personal data has been explained to me and is clear.
+        </label>
+        <%= error_tag f, :agreed_to_personal_data %>
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Terms of service</legend>
+      <p>
+        <%= checkbox f, :agreed_to_terms, id: "terms_of_service_2" %>
+        <label for="terms_of_service_1" class="checkbox">
+          I have carefully read and understood the above information, agree to the terms for 
+          participation in this study, and am at least 18 years of age.
+        </label>
+        <%= error_tag f, :agreed_to_terms %>
+      </p>
+    </fieldset>
+
+
+    <h2>Before we start</h2>
+    <fieldset>
+
+      <p>We would like to ask you again... Here is a 7-point scale on which the political views 
+      that people might hold are arranged from extremely liberal to extremely conservative. 
+      Where would you place yourself on this scale?</p>
+      <%= for { code, ideology, _ } <- Application.get_env(:network_lab, :ideologies) do %>
+        <div class="ideology"><%= radio_button f, :current_ideology, code %> <%= ideology %></div>
+      <% end %>
+      <%= error_tag f, :current_ideology %>
+
+    </fieldset>
+
+    <p>
+      <%= submit "Proceed", type: "submit", id: "go" %>
+    </p>
+
+  <% end %>
+
+</section>

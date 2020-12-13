@@ -1,0 +1,91 @@
+<script type="text/javascript">
+  // callback function when progressbar is done: click on continue
+  let finished = function() {
+      let button = document.querySelector('div.go-button a#continue.button');
+      if (button) {
+        // and click on the link
+        button.click();
+      }
+  }
+</script>
+
+
+
+<%= if @queue_status != nil do %>
+
+  <section id="queue-status" class="">
+    <h3>
+      Please wait until enough other people have also joined the study. 
+      We are waiting for another <span id="queue-status"><%= @queue_status %></span> MTurker(s).
+    </h3>
+  </section>
+
+<% end %>
+
+
+<section id="pre-start-message">
+
+  <%= render NetworkLabWeb.TaskView, "_progress_bar.html" %>
+
+  <!--
+  ####### PRETEST #######
+  -->
+
+  <%= if Application.get_env(:network_lab, :game_type) == :pretest do %>
+
+    <%= if @user.condition_1 == "control" or show_network_instructions?(@user) == "block" do %>
+
+      <!-- This will fire up the progress-bar if this user will do 'control' -->
+      <script type="text/javascript">
+        let startAt = Math.floor(Date.now()/1000);
+        window.onload = function () { window.run_progress_bar(startAt, 30, '#00ff00', finished) }
+      </script>
+
+    <% end %>
+
+    <!-- This may be shown if the user will do control OR is flushed into control -->
+    <div class="pretest control" style="display:<%= show_control_instructions?(@user) %>;">
+      <%= render NetworkLabWeb.TaskView, "_instr_pretest_control.html", user: @user %>
+    </div>
+
+    <div class="pretest homophilous random" style="display:<%= show_network_instructions?(@user) %>;">
+      <%= render NetworkLabWeb.TaskView, "_instr_pretest_other.html", user: @user %>
+    </div>
+
+  <% end %>
+
+
+  <!--
+  ####### REAL GAME #######
+  -->
+
+  <%= if Application.get_env(:network_lab, :game_type) != :pretest do %>
+
+    <%= if @user.condition_1 == "control" or show_network_instructions?(@user) == "block" do %>
+      <!-- This will fire up the progress-bar if this user will do 'control' -->
+      <script type="text/javascript">
+        let startAt = Math.floor(Date.now()/1000);
+        window.onload = function () { window.run_progress_bar(startAt, 30, '#00ff00', finished) }
+      </script>
+    <% end %>
+
+    <div class="real control" style="display:<%= show_control_instructions?(@user) %>;">
+      <%= render NetworkLabWeb.TaskView, "_instr_real_control.html", user: @user %>
+    </div>
+
+    <div class="real homophilous random" style="display:<%= show_network_instructions?(@user) %>;">
+      <%= render NetworkLabWeb.TaskView, "_instr_real_other.html", user: @user %>
+    </div>
+
+  <% end %>
+
+
+  <!--
+  ######## PROCEED BUTTON ########
+  -->
+
+  <div class="go-button" style='visibility:hidden;'>
+    <%= link "Go", to: Routes.task_path(@conn, :index), id: "continue", class: "button" %>
+  </div>
+
+</section>

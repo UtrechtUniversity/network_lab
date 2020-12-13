@@ -1,0 +1,17 @@
+Waar ga ik naar deployen, is er een goede tutorial, en zijn er weirde dingen
+
+Zit ik OK als het gaat om GenServers in te zetten als database en dat de database
+
+Zit ik OK om een queue te gebruiken, of loop ik weer risico, korte uitleg of er meerdere processen
+de boel kunnen manipuleren, wat is de beste manier om de 98 man door te sluizen.
+    Wat als een gebruiker uitlogt en weer opnieuw inlogt.
+
+De Cache vs Database, ga ik voor een 1 op 1 ding: na updaten en na inserten schrijf eerst in Cache en
+daarna in Database.
+    Auto-increment -> id field
+
+https://underthehood.meltwater.com/blog/2018/08/08/excel-friendly-csv-exports-with-elixir/
+https://www.poeticoding.com/dealing-with-long-running-http-requests-and-timeouts-in-phoenix/
+https://underthehood.meltwater.com/blog/2018/08/08/excel-friendly-csv-exports-with-elixir/
+
+

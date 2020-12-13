@@ -1,0 +1,164 @@
+/* This file is for your main application css. */
+
+@import "./phoenix.css";
+
+section#network-data {
+    margin-bottom: 5rem;
+}
+
+li.message {
+    list-style-type: none;
+}
+
+li.message span {
+    width: 2rem;
+    margin-right: 0.8rem;
+}
+
+li.message span img {
+    width: 1.8rem;
+    margin: 0;
+    padding: 0;
+    margin-bottom: -0.25rem;
+}
+
+section#neighbour_pane h3 {
+    margin-bottom: 0.8rem;
+}
+
+section#neighbour_pane ul {
+    margin-bottom: 15px;
+}
+
+section#message-decision h4 {
+    margin-bottom: 5px;
+}
+
+.big-margin-top {
+    margin-top: 3rem;
+}
+
+.left-line {
+    border-left: 1px solid #eaeaea;
+}
+
+.margin-left {
+    margin-left: 1rem;
+}
+
+li.username {
+    color: white;
+    border-radius: .4rem;
+    padding-left: 1.2rem;
+    list-style-type: none;
+    margin-bottom: 5px;
+    width: 15rem;
+}
+
+li.username.conservative {
+    background-color: #fc2803;
+}
+
+li.username.moderate {
+    background-color: #b9b9b9;
+}
+
+li.username.liberal {
+    background-color: #0394fc;
+}
+
+li.inline {
+    float: left;
+    margin-right: 5px;
+}
+
+
+.button.green {
+    border-color: #00ff00;
+    background-color: #00ff00;
+}
+  
+  
+div#progress-bar-wrapper {
+    margin-bottom: 1.3rem;
+    height: 2.5rem;
+}
+
+
+div#progress-bar-wrapper #progress-bar-past {
+    height: 1rem;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+
+div#progress-bar-wrapper #progress-bar-future {
+    height: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+div.ideology {
+    margin: 0 0 1.6rem 0;
+    height: 1.5rem;
+}
+
+span.help-block {
+    padding-top: 1rem;
+}
+
+
+
+section.welcome {
+    line-height: 2.2rem;
+}
+
+section.welcome h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+section.welcome > h2:first-child {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+section.welcome p {
+    margin-bottom: 1.2rem;
+}
+
+section.welcome ol {
+    list-style-position: outside;
+}
+
+section.welcome fieldset p {
+    display: flex;
+    align-items: flex-start;
+}
+
+section.welcome fieldset label {
+    font-weight: 300;
+    margin-left: 1rem;
+}
+  
+
+section.terms-agreements {
+    padding: 1.5rem;
+    font-size: 1.3rem;
+    border-bottom: 1px solid #e3e3e3;
+    background: #eee;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    line-height: 1.8rem;
+}
+
+section.terms-agreements p {
+    margin-bottom: 0;
+    margin-top: 1.3rem;
+}
+
+section.terms-agreements h4 {
+    margin-bottom: 0;
+}
+  

@@ -1,0 +1,34 @@
+<section id="export">
+  <p>
+    <%= link "Index", to: "/admin/", method: "get", class: "button" %>
+  </p>
+</section>
+
+<section id="user_tokens">
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>access token</th>
+        <th>exit token</th>
+        <th>wl lib</th>
+        <th>wl con</th>
+        <th>wl mod</th>
+    </thead>
+
+    <tbody>
+      <%= for user <- @users do %>
+        <tr>
+          <td class="id"><%= user.id %></td>
+          <td class="name"><%= user.username %></td>
+          <td class=""><%= user.access_token %></td>
+          <td class=""><%= user.exit_token %></td>
+          <td class=""><%= user.workload["liberal"] %></td>
+          <td class=""><%= user.workload["conservative"] %></td>
+          <td class=""><%= user.workload["moderate"] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

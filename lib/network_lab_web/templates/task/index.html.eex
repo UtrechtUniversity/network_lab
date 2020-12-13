@@ -1,0 +1,86 @@
+<div class="row">
+
+  <div class="column column-75">
+
+    <% in_regular_time? = NetworkLabWeb.TaskView.regular_time?(@user) %>
+
+    <%= render NetworkLabWeb.TaskView, "_progress_bar.html" %>
+
+    <section id="messages" class="">
+
+      <%= render NetworkLabWeb.TaskView, "_banner_regular_time.html", 
+        network: @network, user: @user, in_regular_time?: in_regular_time? %>
+
+      <%= render NetworkLabWeb.TaskView, "_banner_after_regular_time.html", 
+        network: @network, user: @user, in_regular_time?: in_regular_time? %>
+
+      <ul id="undecided-messages-list">
+        <%= for message <- @undecided_messages do %>
+          <%= render NetworkLabWeb.TaskView, "_message.html", message: message, user: @user, conn: @conn %>
+        <% end %>
+      </ul>
+      <ul id="decided-messages-list">
+        <%= for message <- @decided_messages do %>
+          <%= render NetworkLabWeb.TaskView, "_message.html", message: message, user: @user, conn: @conn %>
+        <% end %>
+      </ul>
+
+    </section>
+
+    <section id="finished" style="display:none;">
+      <%= link "Please click to exit", to: Routes.exit_path(@conn, :index), id: "exit", class: "button" %>
+    </section>
+  </div>
+
+
+  <div class="column column-25 left-line">
+    <section id="neighbour_pane">
+      <%= render NetworkLabWeb.TaskView, "_neighbour_pane.html", user: @user %>
+    </section>
+  </div>
+  
+</div>
+
+
+<script type="text/javascript">
+
+  let duration = <%= Application.get_env(:network_lab, :game_duration) %>;
+  // user started a bit later because of instructions
+  let startRegular = <%= NaiveDateTime.diff(@user.started_at, ~N[1970-01-01 00:00:00]) %> + 30;
+  // game ends:
+  let extraTime = <%= Application.get_env(:network_lab, :game_ends) %> - duration;
+  // user start extra time
+  let startExtra = <%= NaiveDateTime.diff(@user.started_at, ~N[1970-01-01 00:00:00]) %> + 30 + duration;
+
+  // for the remaining minutes...
+  let finishedExtraTime = function() {
+    console.log('done');
+  }
+
+  let finishedRegular = function() {
+
+    let regularPane = document.querySelector('div#task-banner-regular');
+    let afterRegularPane = document.querySelector('div#task-banner-after-regular');
+
+    if (regularPane && afterRegularPane) {
+        // hide normal pane
+        regularPane.style.display = "none";
+        // show hurry-up pane
+        afterRegularPane.style.display = "block";
+        //
+        window.run_progress_bar(startExtra, extraTime, '#ff0000', finishedExtraTime);
+    }
+  }
+
+  <%= if in_regular_time? do %>
+
+    window.onload = function () { window.run_progress_bar(startRegular, duration, 
+      '#00ff00', finishedRegular); }
+
+  <% else %>
+
+    window.onload = function () { window.run_progress_bar(startExtra, extraTime, 
+      '#ff0000', finishedExtraTime); }
+
+  <% end %>
+</script>

@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="column column-75">
+
+    <section id="message-decision">
+
+      <h2><%= @message.proposition_title %></h2>
+
+      <h4 id="prop-text" data-spec="<%= @message.proposition_id %>"><%= @message.proposition %></h4>
+
+      <%= if NetworkLabWeb.TaskView.has_neighbours?(@user) do %>
+
+        <!-- %= render NetworkLabWeb.TaskView, "_share_list.html", user: @user, message: @message % -->
+
+      <% end %>
+
+
+      <%= unless @message.decision do %>
+
+        <h5 class="big-margin-top">Your decision: (buttons will be clickable after 3 secs)</h5>
+        <div class="container" style="padding-left: 0;">
+          <div id="decision-form" class="row">
+            
+            <div class="column share">
+              <%= form_for @changeset, Routes.task_path(@conn, :update, @message), [method: "put"], fn f -> %>
+                <%= hidden_input f, :decision, value: 'share' %>
+                <%= submit "Share", class: "decision-button button-outline", disabled: "disabled" %>
+              <% end %>
+            </div>
+
+            <div class="column discard">
+              <%= form_for @changeset, Routes.task_path(@conn, :update, @message), [method: "put"], fn f -> %>
+                <%= hidden_input f, :decision, value: 'discard' %>
+                <%= submit "Discard", class: "decision-button button-outline", disabled: "disabled" %>
+              <% end %>
+            </div>
+
+            <div class="column column-50"></div>
+          </div>
+
+      <% end %> 
+    </section>
+
+    <div>
+        <%= link "< Back", to: Routes.task_path(@conn, :index) %>
+    </div>
+
+  </div>
+
+  <div class="column column-25 left-line">
+    <section id="neighbour_pane">
+      <%= render NetworkLabWeb.TaskView, "_neighbour_pane.html", user: @user %>
+    </section>
+  </div>
+</div>
+
+
+
+

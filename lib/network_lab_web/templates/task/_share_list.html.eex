@@ -1,0 +1,17 @@
+<h5>This messages was shared by:</h5>
+<% 
+    sharers = NetworkLab.Shares.get(@user, @message)
+    sharer_keys = Map.keys(sharers)
+    neighbour_keys = Map.keys(@user.neighbour_info)
+    common = MapSet.intersection(MapSet.new(sharer_keys), MapSet.new(neighbour_keys))
+%>
+<%= if Enum.count(common) > 0 do %>
+    <ul>
+    <%= for username <- common do %>
+        <%= NetworkLabWeb.TaskView.username_list_item(username, "moderate", "inline") %>
+    <% end %>
+    </ul>
+    <br style="clear:both;"/>
+<% else %>
+    Nobody yet
+<% end %>
